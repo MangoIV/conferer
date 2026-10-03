@@ -24,7 +24,8 @@ module Conferer.FromConfig.Extended
   , module Conferer.Config
   ) where
 
-import Data.Text
+import Data.Text (Text)
+import Data.Text qualified as Text
 import Data.Typeable
 import Test.Hspec
 import GHC.Generics
@@ -109,7 +110,7 @@ ensureSingleConfigParsesTheRightThing ::
     forall a. (Eq a, Show a, FromConfig a) =>
     Text -> a -> SpecWith ()
 ensureSingleConfigParsesTheRightThing keyContent value =
-  context ("with a config value of '" ++ unpack keyContent ++ "'" ) $ do
+  context ("with a config value of '" ++ Text.unpack keyContent ++ "'" ) $ do
     it "gets the right value" $ do
       config <- configWith [("some.key", keyContent)]
       fetchedValue <- fetchFromConfig @a "some.key" config
